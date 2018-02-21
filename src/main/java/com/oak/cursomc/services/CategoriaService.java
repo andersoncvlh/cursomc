@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.oak.cursomc.domain.Categoria;
 import com.oak.cursomc.repositories.CategoriaRepository;
+import com.oak.cursomc.services.exceptions.EntityNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -19,7 +20,11 @@ public class CategoriaService {
 	}
 	
 	public Categoria buscar(Long id) {
-		return categoraiRepository.findOne(id);
+		Categoria obj = categoraiRepository.findOne(id);
+		if (obj == null) {
+			throw new EntityNotFoundException("Categoria não encontrada! Id: " + id);
+		}
+		return obj;
 	}
 	
 }
